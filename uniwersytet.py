@@ -1,226 +1,227 @@
 DATASET = { 
-   "meta": { 
-       "dataset_id": "university_courses_v1", 
-       "institution": "Example University", 
-       "semester": "summer_2025", 
-       "notes": [ 
-           "Oceny są w skali 2.0–5.0, mogą być None (brak zaliczenia).", 
-           "Nie każdy student zapisał się na każdy kurs.", 
-           "Występują błędy danych: brakujące ID, duplikaty zapisów, punkty ECTS spoza zakresu.", 
-           "Czas nauki podany w godzinach (float)." 
-       ] 
-   }, 
- 
-   # Lista kursów oferowanych w semestrze 
-   "courses": [ 
-       {"course_id": "CS101", "name": "Podstawy programowania", "ects": 6}, 
-       {"course_id": "CS102", "name": "Algorytmy i struktury danych", "ects": 7}, 
-       {"course_id": "CS103", "name": "Bazy danych", "ects": 5}, 
-       {"course_id": "CS104", "name": "Inżynieria oprogramowania", "ects": 6}, 
-       {"course_id": "CS105", "name": "Statystyka", "ects": 4}, 
-       {"course_id": "CS999", "name": "Kurs testowy", "ects": 0}, 
-   ], 
- 
-   # Studenci – brak wieku lub kierunku jest dopuszczalny 
-   "students": [ 
-       {"student_id": "S001", "age": 21, "major": "Informatyka"}, 
-       {"student_id": "S002", "age": 22, "major": "Informatyka"}, 
-       {"student_id": "S003", "age": 24, "major": "Informatyka i ekonometria"}, 
-       {"student_id": "S004", "age": None, "major": "Informatyka"}, 
-       {"student_id": "S005", "age": 20, "major": "Analiza danych"}, 
-       {"student_id": "S006", "age": 23, "major": None}, 
-       {"student_id": "S007", "age": 25, "major": "Informatyka"}, 
-       {"student_id": "S008", "age": 22, "major": "Analiza danych"}, 
-       {"student_id": "S009", "age": 21, "major": "Informatyka"}, 
-       {"student_id": "S010", "age": 27, "major": "Informatyka"}, 
-   ], 
- 
-   "enrollments": [ 
-       { 
-           "enrollment_id": 3001, 
-           "student_id": "S001", 
-           "course_id": "CS101", 
-           "grade": 4.5, 
-           "study_hours": 42.0 
-       }, 
-       { 
-           "enrollment_id": 3002, 
-           "student_id": "S001", 
-           "course_id": "CS102", 
-           "grade": 4.0, 
-           "study_hours": 55.5 
-       }, 
-       { 
-           "enrollment_id": 3003, 
-           "student_id": "S002", 
-           "course_id": "CS101", 
-           "grade": 3.5, 
-           "study_hours": 38.0 
-       }, 
-       { 
-           "enrollment_id": 3004, 
-           "student_id": "S002", 
-           "course_id": "CS103", 
-           "grade": None, 
-           "study_hours": 20.0 
-       }, 
-       { 
-           "enrollment_id": 3005, 
-           "student_id": "S003", 
-           "course_id": "CS104", 
-           "grade": 5.0, 
-           "study_hours": 60.0 
-       }, 
-       { 
-           "enrollment_id": 3006, 
-           "student_id": "S003", 
-           "course_id": "CS105", 
-           "grade": 4.0, 
-           "study_hours": 35.0 
-       }, 
-       { 
-           "enrollment_id": 3007, 
-           "student_id": "S004", 
-           "course_id": "CS101", 
-           "grade": 2.0, 
-           "study_hours": 15.0 
-       }, 
-       { 
-           "enrollment_id": 3008, 
-           "student_id": "S005", 
-           "course_id": "CS103", 
-           "grade": 4.5, 
-           "study_hours": 48.0 
-       }, 
-       { 
-           "enrollment_id": 3009, 
-           "student_id": "S005", 
-           "course_id": "CS103", 
-           "grade": 4.5, 
-           "study_hours": 48.0 
-       }, 
-       { 
-           "enrollment_id": 3010, 
-           "student_id": "S006", 
-           "course_id": "CS999", 
-           "grade": 3.0, 
-           "study_hours": 5.0 
-       }, 
-       { 
-           "enrollment_id": 3011, 
-           "student_id": "S007", 
-           "course_id": "CS102", 
-           "grade": 5.0, 
-           "study_hours": 70.0 
-       }, 
-       { 
-           "enrollment_id": 3012, 
-           "student_id": "S008", 
-           "course_id": "CS105", 
-           "grade": 3.0, 
-           "study_hours": 25.0 
-       }, 
-       { 
-           "enrollment_id": 3013, 
-           "student_id": "S009", 
-           "course_id": "CS104", 
-           "grade": 4.0, 
-           "study_hours": 50.0 
-       }, 
-       { 
-           "enrollment_id": 3014, 
-           "student_id": "S010", 
-           "course_id": "CS102", 
-           "grade": 2.0, 
-           "study_hours": 18.0 
-       }, 
-       { 
-           "enrollment_id": 3015, 
-           "student_id": None, 
-           "course_id": "CS101", 
-           "grade": 3.5, 
-           "study_hours": 30.0 
-       }, 
-       { 
-           "enrollment_id": 3016, 
-           "student_id": "S001", 
-           "course_id": "CS404", 
-           "grade": 4.0, 
-           "study_hours": 40.0 
-       }, 
-       { 
-           "enrollment_id": 3017, 
-           "student_id": "S008", 
-           "course_id": "CS101", 
-           "grade": 5.0, 
-           "study_hours": 65.0 
-       }, 
-       { 
-           "enrollment_id": 3018, 
-           "student_id": "S004", 
-           "course_id": "CS105", 
-           "grade": 2.0, 
-           "study_hours": 12.0 
-       }, 
-       { 
-           "enrollment_id": 3019, 
-           "student_id": "S002", 
-           "course_id": "CS104", 
-           "grade": 3.0, 
-           "study_hours": None 
-       }, 
-       { 
-           "enrollment_id": 3020, 
-           "student_id": "S010", 
-           "course_id": "CS103", 
-           "grade": 4.5, 
-           "study_hours": 52.0 
-       }, 
-   ] 
+    "meta": { 
+        "dataset_id": "university_courses_v1", 
+        "institution": "Example University", 
+        "semester": "summer_2025", 
+        "notes": [ 
+            "Oceny są w skali 2.0–5.0, mogą być None (brak zaliczenia).", 
+            "Nie każdy student zapisał się na każdy kurs.", 
+            "Występują błędy danych: brakujące ID, duplikaty zapisów, punkty ECTS spoza zakresu.", 
+            "Czas nauki podany w godzinach (float)." 
+        ] 
+    }, 
+    
+    # Lista kursów oferowanych w semestrze 
+    "courses": [ 
+        {"course_id": "CS101", "name": "Podstawy programowania", "ects": 6}, 
+        {"course_id": "CS102", "name": "Algorytmy i struktury danych", "ects": 7}, 
+        {"course_id": "CS103", "name": "Bazy danych", "ects": 5}, 
+        {"course_id": "CS104", "name": "Inżynieria oprogramowania", "ects": 6}, 
+        {"course_id": "CS105", "name": "Statystyka", "ects": 4}, 
+        {"course_id": "CS999", "name": "Kurs testowy", "ects": 0}, 
+    ], 
+    
+    # Studenci – brak wieku lub kierunku jest dopuszczalny 
+    "students": [ 
+        {"student_id": "S001", "age": 21, "major": "Informatyka"}, 
+        {"student_id": "S002", "age": 22, "major": "Informatyka"}, 
+        {"student_id": "S003", "age": 24, "major": "Informatyka i ekonometria"}, 
+        {"student_id": "S004", "age": None, "major": "Informatyka"}, 
+        {"student_id": "S005", "age": 20, "major": "Analiza danych"}, 
+        {"student_id": "S006", "age": 23, "major": None}, 
+        {"student_id": "S007", "age": 25, "major": "Informatyka"}, 
+        {"student_id": "S008", "age": 22, "major": "Analiza danych"}, 
+        {"student_id": "S009", "age": 21, "major": "Informatyka"}, 
+        {"student_id": "S010", "age": 27, "major": "Informatyka"}, 
+    ], 
+    
+    "enrollments": [ 
+        { 
+            "enrollment_id": 3001, 
+            "student_id": "S001", 
+            "course_id": "CS101", 
+            "grade": 4.5, 
+            "study_hours": 42.0 
+        }, 
+        { 
+            "enrollment_id": 3002, 
+            "student_id": "S001", 
+            "course_id": "CS102", 
+            "grade": 4.0, 
+            "study_hours": 55.5 
+        }, 
+        { 
+            "enrollment_id": 3003, 
+            "student_id": "S002", 
+            "course_id": "CS101", 
+            "grade": 3.5, 
+            "study_hours": 38.0 
+        }, 
+        { 
+            "enrollment_id": 3004, 
+            "student_id": "S002", 
+            "course_id": "CS103", 
+            "grade": None, 
+            "study_hours": 20.0 
+        }, 
+        { 
+            "enrollment_id": 3005, 
+            "student_id": "S003", 
+            "course_id": "CS104", 
+            "grade": 5.0, 
+            "study_hours": 60.0 
+        }, 
+        { 
+            "enrollment_id": 3006, 
+            "student_id": "S003", 
+            "course_id": "CS105", 
+            "grade": 4.0, 
+            "study_hours": 35.0 
+        }, 
+        { 
+            "enrollment_id": 3007, 
+            "student_id": "S004", 
+            "course_id": "CS101", 
+            "grade": 2.0, 
+            "study_hours": 15.0 
+        }, 
+        { 
+            "enrollment_id": 3008, 
+            "student_id": "S005", 
+            "course_id": "CS103", 
+            "grade": 4.5, 
+            "study_hours": 48.0 
+        }, 
+        { 
+            "enrollment_id": 3009, 
+            "student_id": "S005", 
+            "course_id": "CS103", 
+            "grade": 4.5, 
+            "study_hours": 48.0 
+        }, 
+        { 
+            "enrollment_id": 3010, 
+            "student_id": "S006", 
+            "course_id": "CS999", 
+            "grade": 3.0, 
+            "study_hours": 5.0 
+        }, 
+        { 
+            "enrollment_id": 3011, 
+            "student_id": "S007", 
+            "course_id": "CS102", 
+            "grade": 5.0, 
+            "study_hours": 70.0 
+        }, 
+        { 
+            "enrollment_id": 3012, 
+            "student_id": "S008", 
+            "course_id": "CS105", 
+            "grade": 3.0, 
+            "study_hours": 25.0 
+        }, 
+        { 
+            "enrollment_id": 3013, 
+            "student_id": "S009", 
+            "course_id": "CS104", 
+            "grade": 4.0, 
+            "study_hours": 50.0 
+        }, 
+        { 
+            "enrollment_id": 3014, 
+            "student_id": "S010", 
+            "course_id": "CS102", 
+            "grade": 2.0, 
+            "study_hours": 18.0 
+        }, 
+        { 
+            "enrollment_id": 3015, 
+            "student_id": None, 
+            "course_id": "CS101", 
+            "grade": 3.5, 
+            "study_hours": 30.0 
+        }, 
+        { 
+            "enrollment_id": 3016, 
+            "student_id": "S001", 
+            "course_id": "CS404", 
+            "grade": 4.0, 
+            "study_hours": 40.0 
+        }, 
+        { 
+            "enrollment_id": 3017, 
+            "student_id": "S008", 
+            "course_id": "CS101", 
+            "grade": 5.0, 
+            "study_hours": 65.0 
+        }, 
+        { 
+            "enrollment_id": 3018, 
+            "student_id": "S004", 
+            "course_id": "CS105", 
+            "grade": 2.0, 
+            "study_hours": 12.0 
+        }, 
+        { 
+            "enrollment_id": 3019, 
+            "student_id": "S002", 
+            "course_id": "CS104", 
+            "grade": 3.0, 
+            "study_hours": None 
+        }, 
+        { 
+            "enrollment_id": 3020, 
+            "student_id": "S010", 
+            "course_id": "CS103", 
+            "grade": 4.5, 
+            "study_hours": 52.0 
+        }, 
+    ] 
 } 
  
 class Student: 
-   def __init__(self, id, age, major): 
-       self.id = id 
-       self.age = age 
-       self.major = major 
-       self.enrollments = [] 
- 
-   def __str__(self): 
-       return f"id: {self.id}, age: {self.age}, major: {self.major}, enrollments: {self.enrollments}" 
- 
-   def add_enrollment(self, enrollment): 
-       self.enrollments.append(enrollment) 
+    def __init__(self, id, age, major): 
+        self.id = id 
+        self.age = age 
+        self.major = major 
+        self.enrollments = [] 
+    
+    def __str__(self): 
+        return f"id: {self.id}, age: {self.age}, major: {self.major}, enrollments: {self.enrollments}" 
+    
+    def add_enrollment(self, enrollment): 
+        self.enrollments.append(enrollment) 
+    
+    
  
 class University: 
-   def __init__(self): 
-       self.students = [] 
- 
-   def __str__(self): 
-       students_string = "" 
-       for student in self.students: 
-           students_string += f"{student}\n" 
-       return students_string 
- 
-   def add_student(self, student): 
-       self.students.append(student) 
- 
+    def __init__(self): 
+        self.students = [] 
+    
+    def __str__(self): 
+        students_string = "" 
+        for student in self.students: 
+            students_string += f"{student}\n" 
+        return students_string 
+    
+    def add_student(self, student): 
+        self.students.append(student) 
  
 def main(): 
-   university = University() 
+    university = University() 
+    
+    for dataset_student in DATASET["students"]: 
+        student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"]) 
+        university.add_student(student) 
+    
+    for student in university.students: 
+        for dataset_enrollment in DATASET["enrollments"]: 
+            if dataset_enrollment["student_id"] == student.id: 
+                enrollment = dataset_enrollment.copy() 
+                del enrollment["student_id"] 
+                student.add_enrollment(enrollment) 
  
-   for dataset_student in DATASET["students"]: 
-       student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"]) 
-       university.add_student(student) 
- 
-   for student in university.students: 
-       for dataset_enrollment in DATASET["enrollments"]: 
-           if dataset_enrollment["student_id"] == student.id: 
-               enrollment = dataset_enrollment.copy() 
-               del enrollment["student_id"] 
-               student.add_enrollment(enrollment) 
- 
-   print(university) 
+    print(university) 
  
 main() 
 
