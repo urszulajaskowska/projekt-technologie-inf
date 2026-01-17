@@ -206,6 +206,7 @@ class Student:
 
             if grade_counter == 0:
                 return None
+                
         return grade_sum / grade_counter
             
     
