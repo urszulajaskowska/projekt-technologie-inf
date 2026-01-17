@@ -189,11 +189,26 @@ class Student:
     def __str__(self): 
         return f"id: {self.id}, age: {self.age}, major: {self.major}, enrollments: {self.enrollments}" 
     
-    def add_enrollment(self, enrollment): 
-        self.enrollments.append(enrollment) 
+    def add_enrollment(self, course_id, grade, study_hours):
+        enrollment = {"course_id": course_id, "grade": grade, "study_hours": study_hours}
+        self.enrollments.append(enrollment)
+
+    def calculate_grade(self):
+        grade_sum = 0
+        grade_counter = 0
+
+        for enrollment in self.enrollments:
+            grade = enrollment["grade"]
+            
+            if grade is not None:
+                grade_counter += 1
+                grade_sum += enrollment["grade"]
+
+            if grade_counter == 0:
+                return None
+        return grade_sum / grade_counter
+            
     
-    
- 
 class University: 
     def __init__(self): 
         self.students = [] 
@@ -214,14 +229,14 @@ def main():
         student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"]) 
         university.add_student(student) 
     
-    for student in university.students: 
-        for dataset_enrollment in DATASET["enrollments"]: 
-            if dataset_enrollment["student_id"] == student.id: 
-                enrollment = dataset_enrollment.copy() 
-                del enrollment["student_id"] 
-                student.add_enrollment(enrollment) 
- 
-    print(university) 
+    for student in university.students:
+        for dataset_enrollment in DATASET["enrollments"]:
+            if dataset_enrollment["student_id"] == student.id:
+                student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
+                
+    # testy
+    print(university)
+    print(university.students[1].calculate_grade())
  
 main() 
 
