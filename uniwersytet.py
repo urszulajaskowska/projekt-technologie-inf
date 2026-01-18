@@ -178,7 +178,7 @@ DATASET = {
         }, 
     ] 
 } 
- 
+import statistics
 class Student: 
     def __init__(self, id, age, major): 
         self.id = id 
@@ -226,6 +226,46 @@ class University:
     
     def add_student(self, student): 
         self.students.append(student) 
+    
+    def average_grade_for_course(self,course_id):
+        grades = []
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment['grade'] is not None :
+                    grades.append(enrollment['grade'])
+        if len(grades) == 0:
+            return None
+        return sum(grades)/len(grades)
+
+    def percentage_of_people_who_failed(self,course_id):
+        grades = []
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
+                    grades.append(enrollment['grade'])
+        counter = 0
+        for grade in grades :
+            if grade <= 2 :
+                counter += 1
+        if len(grades) == 0:
+            return None
+        percent = counter / len(grades) * 100
+        return percent
+    
+    def median_grade(self,course_id):
+        grades = []
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
+                    grades.append(enrollment['grade'])
+        if len(grades) == 0:
+            return None
+        mediana = statistics.median(grades)
+        return mediana
+
+
+
+
 
         
 def main(): 
@@ -235,15 +275,17 @@ def main():
         student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"]) 
         university.add_student(student) 
     
-    for student in university.students:
-        for dataset_enrollment in DATASET["enrollments"]:
-            if dataset_enrollment["student_id"] == student.id:
-                student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
-                
-    # testy
-    print(university)
-    print(university.students[1].calculate_grade())
- 
-main() 
 
+    for student in university.students: 
+        for dataset_enrollment in DATASET["enrollments"]: 
+            if dataset_enrollment["student_id"] == student.id: 
+                enrollment = dataset_enrollment.copy() 
+                del enrollment["student_id"] 
+                student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
  
+    print(university) 
+    print(university.average_grade_for_course("CS102"))
+    print(university.students[1].calculate_grade())
+
+
+main() 
