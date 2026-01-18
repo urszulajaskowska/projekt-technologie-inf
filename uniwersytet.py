@@ -210,6 +210,10 @@ class Student:
         return grade_sum / grade_counter
             
     
+    def add_enrollment(self, enrollment): 
+        self.enrollments.append(enrollment)
+
+
 class University: 
     def __init__(self): 
         self.students = [] 
@@ -222,7 +226,8 @@ class University:
     
     def add_student(self, student): 
         self.students.append(student) 
- 
+
+        
 def main(): 
     university = University() 
     
