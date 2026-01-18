@@ -208,10 +208,6 @@ class Student:
                 return None
                 
         return grade_sum / grade_counter
-            
-    
-    def add_enrollment(self, enrollment): 
-        self.enrollments.append(enrollment)
 
 
 class University: 
