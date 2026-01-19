@@ -209,6 +209,10 @@ class Student:
                 
         return grade_sum / grade_counter
 
+        
+
+
+
 
 class University: 
     def __init__(self): 
@@ -223,22 +227,21 @@ class University:
     def add_student(self, student): 
         self.students.append(student) 
     
-    def average_grade_for_course(self,course_id):
-        grades = []
-        for student in self.students:
-            for enrollment in student.enrollments:
-                if enrollment["course_id"] == course_id and enrollment['grade'] is not None :
-                    grades.append(enrollment['grade'])
-        if len(grades) == 0:
-            return None
-        return sum(grades)/len(grades)
-
-    def percentage_of_people_who_failed(self,course_id):
+    def _function_courses(self,course_id):
         grades = []
         for student in self.students:
             for enrollment in student.enrollments:
                 if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
                     grades.append(enrollment['grade'])
+        return grades
+    def average_grade_for_course(self,course_id):
+        grades = self._function_courses(course_id)
+        if len(grades) == 0:
+            return None
+        return sum(grades)/len(grades)
+
+    def percentage_of_people_who_failed(self,course_id):
+        grades = self._function_courses(course_id)
         counter = 0
         for grade in grades :
             if grade <= 2 :
@@ -248,22 +251,37 @@ class University:
         percent = counter / len(grades) * 100
         return percent
     
-    def median_grade(self,course_id):
-        grades = []
-        for student in self.students:
-            for enrollment in student.enrollments:
-                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
-                    grades.append(enrollment['grade'])
+    def median_grade(self, course_id: str) -> float | None:
+        grades = self._function_courses(course_id)
+        
         if len(grades) == 0:
             return None
         mediana = statistics.median(grades)
         return mediana
+    def learning_effectiveness(self,student_id,course_id):
+            for student in self.students:
+                    if student.id == student_id:
+                        for enrollment in student.enrollments:
+                                if enrollment['course_id'] == course_id:
+                                    if  enrollment['study_hours'] is None or enrollment['grade'] is  None or enrollment['study_hours'] == 0:
+                                        return None
+                                    effectiveness = enrollment['grade'] / enrollment['study_hours']
+                                    return effectiveness
+    
+    def best_student_ranking(self,course_id):
+        student_list = []
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
+                    student_list.append((student,enrollment['grade']))
+        if len(student_list) == 0:
+            return None
+        student_list.sort(key = lambda x: x[1],reverse = True)
+        return student_list
+    
 
 
 
-
-
-        
 def main(): 
     university = University() 
     
@@ -281,7 +299,11 @@ def main():
  
     print(university) 
     print(university.average_grade_for_course("CS102"))
+    print(university.median_grade("CS102"))
     print(university.students[1].calculate_grade())
+    ranking = university.best_student_ranking("CS102")
+    for student,grade in ranking:
+        print(student.id,grade)
 
 
 main() 
