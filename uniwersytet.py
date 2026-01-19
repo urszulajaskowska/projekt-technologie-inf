@@ -193,7 +193,7 @@ class Student:
         enrollment = {"course_id": course_id, "grade": grade, "study_hours": study_hours}
         self.enrollments.append(enrollment)
 
-    def calculate_grade(self):
+    def calculate_average(self):
         grade_sum = 0
         grade_counter = 0
 
@@ -209,10 +209,6 @@ class Student:
                 
         return grade_sum / grade_counter
 
-        
-
-
-
 
 class University: 
     def __init__(self): 
@@ -227,20 +223,21 @@ class University:
     def add_student(self, student): 
         self.students.append(student) 
     
-    def _function_courses(self,course_id):
+    def _function_courses(self, course_id):
         grades = []
         for student in self.students:
             for enrollment in student.enrollments:
                 if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
                     grades.append(enrollment['grade'])
         return grades
-    def average_grade_for_course(self,course_id):
+    
+    def average_grade_for_course(self, course_id):
         grades = self._function_courses(course_id)
         if len(grades) == 0:
             return None
         return sum(grades)/len(grades)
 
-    def percentage_of_people_who_failed(self,course_id):
+    def percentage_of_people_who_failed(self, course_id):
         grades = self._function_courses(course_id)
         counter = 0
         for grade in grades :
@@ -258,7 +255,8 @@ class University:
             return None
         mediana = statistics.median(grades)
         return mediana
-    def learning_effectiveness(self,student_id,course_id):
+    
+    def learning_effectiveness(self, student_id, course_id):
             for student in self.students:
                     if student.id == student_id:
                         for enrollment in student.enrollments:
@@ -268,7 +266,7 @@ class University:
                                     effectiveness = enrollment['grade'] / enrollment['study_hours']
                                     return effectiveness
     
-    def best_student_ranking(self,course_id):
+    def best_student_ranking(self, course_id):
         student_list = []
         for student in self.students:
             for enrollment in student.enrollments:
@@ -278,6 +276,20 @@ class University:
             return None
         student_list.sort(key = lambda x: x[1],reverse = True)
         return student_list
+    
+    def find_best_students(self):
+        best_students = [self.students[0]]
+        for student in self.students[1:]:
+            best_average = best_students[0].calculate_average()
+            average = student.calculate_average()
+
+            if average > best_average:
+                best_students = [student]
+            elif average == best_average:
+                best_students.append(student)
+
+        for best_student in best_students:
+            print(best_student)
     
 
 
@@ -300,10 +312,12 @@ def main():
     print(university) 
     print(university.average_grade_for_course("CS102"))
     print(university.median_grade("CS102"))
-    print(university.students[1].calculate_grade())
+    print(university.students[1].calculate_average())
     ranking = university.best_student_ranking("CS102")
     for student,grade in ranking:
         print(student.id,grade)
+    print("najlepszy student/najlepsi studenci ogółem:")
+    university.find_best_students()
 
 
 main() 
