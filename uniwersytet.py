@@ -255,16 +255,15 @@ class University:
             return None
         mediana = statistics.median(grades)
         return mediana
-    
-    def learning_effectiveness(self, student_id, course_id):
-            for student in self.students:
-                    if student.id == student_id:
-                        for enrollment in student.enrollments:
-                                if enrollment['course_id'] == course_id:
-                                    if  enrollment['study_hours'] is None or enrollment['grade'] is  None or enrollment['study_hours'] == 0:
-                                        return None
-                                    effectiveness = enrollment['grade'] / enrollment['study_hours']
-                                    return effectiveness
+    def learning_effectiveness(self,student_id,course_id):
+        for student in self.students:
+            if student.id == student_id:
+                for enrollment in student.enrollments:
+                    if enrollment['course_id'] == course_id:
+                        if  enrollment['study_hours'] is None or enrollment['grade'] is  None or enrollment['study_hours'] == 0:
+                            return None
+                        effectiveness = enrollment['grade'] / enrollment['study_hours']
+                        return effectiveness
     
     def best_student_ranking(self, course_id):
         student_list = []
