@@ -178,7 +178,10 @@ DATASET = {
         }, 
     ] 
 } 
+
 import statistics
+import copy
+
 class Student: 
     def __init__(self, id, age, major): 
         self.id = id 
@@ -266,6 +269,42 @@ class University:
                                     effectiveness = enrollment['grade'] / enrollment['study_hours']
                                     return effectiveness
     
+    def find_students_in_course(self, course_id):
+        students_in_course = []
+
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
+                    students_in_course.append(student)
+                    break
+
+        # zmieniamy atrybut enrollments studentów tak, żeby zostały tylko enrollmentsy z danego kursu            
+        students_in_course_copy = copy.deepcopy(students_in_course)
+        for student in students_in_course_copy:
+            enrollments_copy = []
+            for e in student.enrollments:
+                if e["course_id"] == course_id:
+                    enrollments_copy.append(e)
+            student.enrollments = enrollments_copy
+        return students_in_course_copy
+
+
+    def course_ranking(self, input_students):
+        students = input_students.copy()
+        students_sorted = []
+
+        while students:
+            best = students[0]
+            for student in students:
+                if student.enrollments[0]["grade"] > best.enrollments[0]["grade"]:
+                    best = student
+
+            students_sorted.append(best)
+            students.remove(best)
+
+        return students_sorted           
+  
+
     def best_student_ranking(self, course_id):
         student_list = []
         for student in self.students:
@@ -318,6 +357,9 @@ def main():
     best_students = university.find_best_students()
     for best_student in best_students:
         print(best_student)
-
+    print("ranking studentów dla kursu CS102")
+    best_students_in_course = university.course_ranking(university.find_students_in_course("CS102"))
+    for s in best_students_in_course:
+        print(s)
 
 main() 
