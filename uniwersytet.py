@@ -327,17 +327,7 @@ class University:
             students.remove(best)
 
         return students_sorted           
-
-    # def best_student_ranking(self, course_id):
-    #     student_list = []
-    #     for student in self.students:
-    #         for enrollment in student.enrollments:
-    #             if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
-    #                 student_list.append((student,enrollment['grade']))
-    #     if len(student_list) == 0:
-    #         return None
-    #     student_list.sort(key = lambda x: x[1],reverse = True)
-    #     return student_list
+        
     
     def find_best_students(self):
         best_students = [self.students[0]]
