@@ -269,6 +269,23 @@ class University:
                         effectiveness = enrollment['grade'] / enrollment['study_hours']
                         return effectiveness
 
+
+    def effectivness_in_course(self,course_id):
+        students_learning_hours = 0
+        students_grades = []
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment['course_id'] == course_id:
+                    if  enrollment['study_hours'] is not None and enrollment['grade'] is not None and enrollment['study_hours'] != 0:
+                        students_learning_hours += enrollment['study_hours']
+                        students_grades.append(enrollment['grade'])
+        if len(students_grades) == 0:
+            return None
+        if students_learning_hours == 0:
+            return None
+        students_average_grades = sum(students_grades)/len(students_grades)
+        return students_average_grades/students_learning_hours
+
     def find_students_in_course(self, course_id):
         students_in_course = []
 
@@ -312,16 +329,6 @@ class University:
 
         return students_sorted
 
-    def best_student_ranking(self, course_id):
-        student_list = []
-        for student in self.students:
-            for enrollment in student.enrollments:
-                if enrollment["course_id"] == course_id and enrollment['grade'] is not None:
-                    student_list.append((student,enrollment['grade']))
-        if len(student_list) == 0:
-            return None
-        student_list.sort(key = lambda x: x[1],reverse = True)
-        return student_list
 
     def find_best_students(self):
         best_students = [self.students[0]]
@@ -336,6 +343,27 @@ class University:
                 best_students.append(student)
 
         return best_students
+
+    def _remove_duplicates(self):
+        for student in self.students:
+            seen_courses = []
+            without_duplicates = []
+            for enrollment in student.enrollments:
+                if enrollment['course_id'] not in seen_courses:
+                    without_duplicates.append(enrollment)
+                    seen_courses.append(enrollment['course_id'])
+            student.enrollments = without_duplicates
+
+
+    def average_study_hours_in_course(self, course_id):
+        study_hours = 0
+
+        for student in self.students:
+            for enrollment in student.enrollments:
+                if enrollment["course_id"] == course_id and enrollment["study_hours"] != None:
+                    study_hours += enrollment["study_hours"]
+
+        return study_hours / len(self.find_students_in_course(course_id))
 
     def average_study_hours_in_major(self, major):
         study_hours = 0
@@ -362,21 +390,41 @@ def main():
                 del enrollment["student_id"]
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
 
+    university._remove_duplicates()
     print(university)
-    print(university.average_grade_for_course("CS102"))
-    print(university.median_grade("CS102"))
-    print(university.students[1].calculate_average())
-    ranking = university.best_student_ranking("CS103")
-    for student,grade in ranking:
-        print(student.id,grade)
 
+
+    print(university.students[1].calculate_average())
+
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        mediana_for_course = university.median_grade(course_id)
+        print(f"Mediana dla kursu {course['name']} wynosi  {mediana_for_course}")
+
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        failure_percent = university.percentage_of_people_who_failed(course_id)
+        print(f"Procent studentów którzy nie zdali kursu {course['name']} wynosi {round(failure_percent)}% ")
+
+
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        avg_for_course = university.average_grade_for_course(course_id)
+        print(f"Średnia dla kursu {course['name']} wynosi  {avg_for_course}")
+
+    for course in DATASET["courses"]:
+        course_id = course["course_id"]
+        effectivness = university.effectivness_in_course(course_id)
+        print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {effectivness}")
+
+    print()
     print("-- Najlepszy student --")
     best_students = university.find_best_students()
     for best_student in best_students:
         print(f"id: {best_student.id}, śrenia ocen: {best_student.calculate_average()}")
     print()
 
-    print("-- Ranking studentów poszczególnych kursów --\n")
+    print("-- Analiza poszczególnych kursów --\n")
     for course in DATASET["courses"]:
         if course["ects"] > 0:
             print(course["name"])
@@ -385,6 +433,9 @@ def main():
             for student in best_students_in_course:
                 print(f"{index}. id: {student.id}, ocena: {student.calculate_average()}")
                 index += 1
+            print()
+            print("Czas nauki / ects:")
+            print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
             print()
 
     print("-- Analiza dla poszczególnych kierunków --\n")
@@ -400,5 +451,6 @@ def main():
         print()
         print("Średni czas nauki:")
         print(f"{university.average_study_hours_in_major(major)} h\n")
+
 
 main()
