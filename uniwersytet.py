@@ -258,7 +258,7 @@ class University:
             return None
         mediana = statistics.median(grades)
         return mediana
-    def learning_efectiveness(self,student_id,course_id):
+    def learning_effectiveness(self,student_id,course_id):
         for student in self.students:
             if student.id == student_id:
                 for enrollment in student.enrollments:
@@ -269,7 +269,7 @@ class University:
                         return effectiveness
                     
 
-    def efectivness_in_course(self,course_id):
+    def effectivness_in_course(self,course_id):
         students_learning_hours = 0
         students_grades = []
         for student in self.students:
@@ -374,6 +374,15 @@ def main():
     print(university.median_grade("CS102"))
     print(university.students[1].calculate_average())
     
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        avg_for_course = university.average_grade_for_course(course_id)
+        print(f"Średnia dla kursu {course['name']} wynosi  {avg_for_course}")
+
+    for course in DATASET["courses"]:
+        course_id = course["course_id"]
+        effectivness = university.effectivness_in_course(course_id)
+        print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {effectivness}")
     ranking = university.best_student_ranking("CS103")
     for student,grade in ranking:
         print(student.id,grade)
