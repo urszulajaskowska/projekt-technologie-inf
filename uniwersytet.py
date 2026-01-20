@@ -370,10 +370,21 @@ def main():
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
  
     print(university) 
-    print(university.average_grade_for_course("CS102"))
-    print(university.median_grade("CS102"))
-    print(university.students[1].calculate_average())
     
+    
+    print(university.students[1].calculate_average())
+
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        mediana_for_course = university.median_grade(course_id)
+        print(f"Mediana dla kursu {course['name']} wynosi  {mediana_for_course}")
+
+    for course in DATASET["courses"]:
+        course_id = course['course_id']
+        failure_percent = university.percentage_of_people_who_failed(course_id)
+        print(f"Procent studentów którzy nie zdali kursu {course['name']} wynosi {round(failure_percent)}% ")
+
+
     for course in DATASET["courses"]:
         course_id = course['course_id']
         avg_for_course = university.average_grade_for_course(course_id)
@@ -383,6 +394,7 @@ def main():
         course_id = course["course_id"]
         effectivness = university.effectivness_in_course(course_id)
         print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {effectivness}")
+    
     ranking = university.best_student_ranking("CS103")
     for student,grade in ranking:
         print(student.id,grade)
