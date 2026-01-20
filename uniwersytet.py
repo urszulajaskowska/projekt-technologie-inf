@@ -353,6 +353,20 @@ class University:
 
         return best_students
     
+    def _remove_duplicates(self):
+        for student in self.students:
+            seen_courses = []
+            without_duplicates = []
+            for enrollment in student.enrollments:
+                if enrollment['course_id'] not in seen_courses:
+                    without_duplicates.append(enrollment)
+                    seen_courses.append(enrollment['course_id'])
+            student.enrollments = without_duplicates
+                
+
+
+
+    
 
 def main(): 
     university = University() 
@@ -368,7 +382,8 @@ def main():
                 enrollment = dataset_enrollment.copy() 
                 del enrollment["student_id"] 
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
- 
+    
+    university._remove_duplicates()
     print(university) 
     
     
