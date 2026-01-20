@@ -289,11 +289,8 @@ class University:
             elif average == best_average:
                 best_students.append(student)
 
-        for best_student in best_students:
-            print(best_student)
+        return best_students
     
-
-
 
 def main(): 
     university = University() 
@@ -318,10 +315,9 @@ def main():
     for student,grade in ranking:
         print(student.id,grade)
     print("najlepszy student/najlepsi studenci ogółem:")
-    university.find_best_students()
-    print("ranking studentów w kursie CS101")
-    posortowane = university.sort_enrollments_by_grade(university.find_enrollments_in_course("CS101"))
-    for e in posortowane:
-        print(e)
+    best_students = university.find_best_students()
+    for best_student in best_students:
+        print(best_student)
+
 
 main() 
