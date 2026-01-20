@@ -288,22 +288,29 @@ class University:
             student.enrollments = enrollments_copy
         return students_in_course_copy
 
+    def find_students_in_major(self, major):
+        students_in_major = []
 
-    def course_ranking(self, input_students):
+        for student in self.students:
+            if student.major == major:
+                students_in_major.append(student)
+
+        return students_in_major
+
+    def create_ranking(self, input_students):
         students = input_students.copy()
         students_sorted = []
 
         while students:
             best = students[0]
             for student in students:
-                if student.enrollments[0]["grade"] > best.enrollments[0]["grade"]:
+                if student.calculate_average() > best.calculate_average():
                     best = student
 
             students_sorted.append(best)
             students.remove(best)
 
         return students_sorted           
-  
 
     def best_student_ranking(self, course_id):
         student_list = []
@@ -350,16 +357,28 @@ def main():
     print(university.average_grade_for_course("CS102"))
     print(university.median_grade("CS102"))
     print(university.students[1].calculate_average())
-    ranking = university.best_student_ranking("CS102")
+    ranking = university.best_student_ranking("CS103")
     for student,grade in ranking:
         print(student.id,grade)
-    print("najlepszy student/najlepsi studenci ogółem:")
+    print("-- Najlepszy student --")
     best_students = university.find_best_students()
     for best_student in best_students:
-        print(best_student)
-    print("ranking studentów dla kursu CS102")
-    best_students_in_course = university.course_ranking(university.find_students_in_course("CS102"))
-    for s in best_students_in_course:
-        print(s)
+        print(f"id: {best_student.id}, śrenia ocen: {best_student.calculate_average()}")
+    print()
+    print("-- Ranking studentów poszczególnych kursów --\n")
+    for course in DATASET["courses"]:
+        print(course["name"])
+        best_students_in_course = university.create_ranking(university.find_students_in_course(course["course_id"]))
+        for student in best_students_in_course:
+            print(f"id: {student.id}, ocena: {student.calculate_average()}")
+        print()
+    print("-- Ranking studentów poszczególnych kierunków --\n")
+    majors = {student["major"] for student in DATASET["students"] if student["major"] != None}
+    for major in majors:
+        print(major)
+        best_students_in_major = university.create_ranking(university.find_students_in_major(major))
+        for student in best_students_in_major:
+            print(f"id: {student.id}, ocena: {student.calculate_average()}")
+        print()
 
 main() 
