@@ -311,7 +311,11 @@ class University:
         while students:
             best = students[0]
             for student in students:
-                if student.calculate_average() > best.calculate_average():
+                if best.calculate_average() is None:
+                    best = student
+                elif student.calculate_average() is None:
+                    continue
+                elif student.calculate_average() > best.calculate_average():
                     best = student
 
             students_sorted.append(best)
@@ -321,16 +325,15 @@ class University:
 
 
     def find_best_students(self):
-        best_students = [self.students[0]]
-        best_average = best_students[0].calculate_average()
-        for student in self.students[1:]:
-            average = student.calculate_average()
+        students_ranked = self.create_ranking(self.students)
+        best_student = students_ranked[0]
+        best_students = [best_student]
 
-            if average > best_average:
-                best_average = average
-                best_students = [student]
-            elif average == best_average:
+        for student in students_ranked[1:]:
+            if student.calculate_average() == best_student.calculate_average():
                 best_students.append(student)
+            if student.calculate_average() < best_student.calculate_average():
+                break
 
         return best_students
 
@@ -350,7 +353,7 @@ class University:
 
         for student in self.students:
             for enrollment in student.enrollments:
-                if enrollment["course_id"] == course_id and enrollment["study_hours"] != None:
+                if enrollment["course_id"] == course_id and enrollment["study_hours"] is not None:
                     study_hours += enrollment["study_hours"]
         if len(self.find_students_in_course(course_id)) == 0:
             return None
@@ -361,7 +364,7 @@ class University:
 
         for student in self.students:
             for enrollment in student.enrollments:
-                if student.major == major and enrollment["study_hours"] != None:
+                if student.major == major and enrollment["study_hours"] is not None:
                     study_hours += enrollment["study_hours"]
 
         return study_hours / len(self.find_students_in_major(major))
@@ -369,9 +372,9 @@ class University:
     def average_age_in_major(self, major):
         age_list = []
         for student in self.students:
-            if student.major == major and student.age != None:
+            if student.major == major and student.age is not None:
                 age_list.append(student.age)
-        if student.age == None:
+        if student.age is None:
             return None
         return sum(age_list) / len(age_list)
 
@@ -433,7 +436,8 @@ def main():
             print(f"{index}. id: {student.id}, ocena: {round(student.calculate_average(), 2)}")
             index += 1
         print()
-        print(f"Średni czas nauki: {university.average_study_hours_in_major(major)} h\n")
+        print(f"Średni czas nauki: {round(university.average_study_hours_in_major(major), 2)} h\n")
         print(f"Średni wiek: {round(university.average_age_in_major(major))}")
         print("---------------------------------------------------------\n")
+
 main()
