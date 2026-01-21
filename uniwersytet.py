@@ -207,7 +207,7 @@ class Student:
                 grade_counter += 1
                 grade_sum += enrollment["grade"]
 
-            if grade_counter == 0:
+        if grade_counter == 0:
                 return None
 
         return grade_sum / grade_counter
@@ -362,7 +362,8 @@ class University:
             for enrollment in student.enrollments:
                 if enrollment["course_id"] == course_id and enrollment["study_hours"] != None:
                     study_hours += enrollment["study_hours"]
-
+        if len(self.find_students_in_course(course_id)) == 0:
+            return None
         return study_hours / len(self.find_students_in_course(course_id))
 
     def average_study_hours_in_major(self, major):
@@ -374,6 +375,21 @@ class University:
                     study_hours += enrollment["study_hours"]
 
         return study_hours / len(self.find_students_in_major(major))
+    
+    def average_age_in_major(self, major):
+        age_list = []
+        for student in self.students:
+            if student.major == major and student.age != None:
+                age_list.append(student.age)
+        if student.age == None:
+            return None
+        return sum(age_list) / len(age_list)
+
+
+
+
+
+
 
 def main():
     university = University()
@@ -418,6 +434,8 @@ def main():
             print()
             print(f"Mediana ocen wynosi {university.median_grade(course['course_id'])}")
             print()
+            print(f"Średni czas nauki na ten kurs wynosi {university.average_study_hours_in_course(course['course_id'])}")
+            print()
             print(f"Procent studentów którzy nie zdali wynosi {round(university.percentage_of_people_who_failed(course['course_id']))}% ")
             print()
             print(f"Średnia dla wynosi {university.average_grade_for_course(course['course_id'])}")
@@ -439,5 +457,6 @@ def main():
         print()
         print("Średni czas nauki:")
         print(f"{university.average_study_hours_in_major(major)} h\n")
-
+        print("średni wiek kierunku")
+        print(f"{round(university.average_age_in_major(major))}")
 main()
