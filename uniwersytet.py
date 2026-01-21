@@ -398,11 +398,6 @@ def main():
 
     for course in DATASET["courses"]:
         course_id = course['course_id']
-        mediana_for_course = university.median_grade(course_id)
-        print(f"Mediana dla kursu {course['name']} wynosi  {mediana_for_course}")
-
-    for course in DATASET["courses"]:
-        course_id = course['course_id']
         failure_percent = university.percentage_of_people_who_failed(course_id)
         print(f"Procent studentów którzy nie zdali kursu {course['name']} wynosi {round(failure_percent)}% ")
 
@@ -421,7 +416,7 @@ def main():
 
     
    
->>>>>>> 3865289 (odswiezanie)
+
     print("-- Najlepszy student --")
     best_students = university.find_best_students()
     for best_student in best_students:
@@ -442,7 +437,7 @@ def main():
             print("Śreni czas nauki / ects:")
             print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
             print()
-        
+            print(f"Mediana ocen wynosi {university.median_grade(course_id)}")
 
     print("-- Analiza dla poszczególnych kierunków --\n")
     majors = {student["major"] for student in DATASET["students"] if student["major"] != None}
