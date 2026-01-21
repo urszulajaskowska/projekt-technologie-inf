@@ -396,27 +396,6 @@ def main():
 
     print(university.students[1].calculate_average())
 
-    for course in DATASET["courses"]:
-        course_id = course['course_id']
-        failure_percent = university.percentage_of_people_who_failed(course_id)
-        print(f"Procent studentów którzy nie zdali kursu {course['name']} wynosi {round(failure_percent)}% ")
-
-
-    for course in DATASET["courses"]:
-        course_id = course['course_id']
-        avg_for_course = university.average_grade_for_course(course_id)
-        print(f"Średnia dla kursu {course['name']} wynosi  {avg_for_course}")
-
-    for course in DATASET["courses"]:
-        course_id = course["course_id"]
-        effectivness = university.effectivness_in_course(course_id)
-        print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {effectivness}")
-
-
-
-    
-   
-
     print("-- Najlepszy student --")
     best_students = university.find_best_students()
     for best_student in best_students:
@@ -437,7 +416,15 @@ def main():
             print("Śreni czas nauki / ects:")
             print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
             print()
-            print(f"Mediana ocen wynosi {university.median_grade(course_id)}")
+            print(f"Mediana ocen wynosi {university.median_grade(course['course_id'])}")
+            print()
+            print(f"Procent studentów którzy nie zdali wynosi {round(university.percentage_of_people_who_failed(course['course_id']))}% ")
+            print()
+            print(f"Średnia dla wynosi {university.average_grade_for_course(course['course_id'])}")
+            print()
+            print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
+
+
 
     print("-- Analiza dla poszczególnych kierunków --\n")
     majors = {student["major"] for student in DATASET["students"] if student["major"] != None}
