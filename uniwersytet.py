@@ -417,7 +417,11 @@ def main():
         effectivness = university.effectivness_in_course(course_id)
         print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {effectivness}")
 
-    print()
+
+
+    
+   
+>>>>>>> 3865289 (odswiezanie)
     print("-- Najlepszy student --")
     best_students = university.find_best_students()
     for best_student in best_students:
