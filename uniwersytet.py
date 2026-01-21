@@ -375,7 +375,7 @@ class University:
                     study_hours += enrollment["study_hours"]
 
         return study_hours / len(self.find_students_in_major(major))
-    
+
     def average_age_in_major(self, major):
         age_list = []
         for student in self.students:
@@ -384,11 +384,6 @@ class University:
         if student.age == None:
             return None
         return sum(age_list) / len(age_list)
-
-
-
-
-
 
 
 def main():
@@ -407,12 +402,8 @@ def main():
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
 
     university._remove_duplicates()
-    print(university)
 
-
-    print(university.students[1].calculate_average())
-
-    print("-- Najlepszy student --")
+    print("-- Najlepszy student --\n")
     best_students = university.find_best_students()
     for best_student in best_students:
         print(f"id: {best_student.id}, śrenia ocen: {best_student.calculate_average()}")
@@ -426,22 +417,16 @@ def main():
             best_students_in_course = university.create_ranking(university.find_students_in_course(course["course_id"]))
             index = 1
             for student in best_students_in_course:
-                print(f"{index}. id: {student.id}, ocena: {student.calculate_average()}")
+                print(f"{index}. id: {student.id}, ocena: {round(student.calculate_average(), 2)}")
                 index += 1
             print()
-            print("Śreni czas nauki / ects:")
-            print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
-            print()
-            print(f"Mediana ocen wynosi {university.median_grade(course['course_id'])}")
-            print()
-            print(f"Średni czas nauki na ten kurs wynosi {university.average_study_hours_in_course(course['course_id'])}")
-            print()
-            print(f"Procent studentów którzy nie zdali wynosi {round(university.percentage_of_people_who_failed(course['course_id']))}% ")
-            print()
-            print(f"Średnia dla wynosi {university.average_grade_for_course(course['course_id'])}")
-            print()
-            print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
-
+            print(f"Średnia ocen: {round(university.average_grade_for_course(course['course_id']), 2)}\n")
+            print(f"Mediana ocen: {university.median_grade(course['course_id'])}\n")
+            print(f"Średni czas nauki: {round(university.average_study_hours_in_course(course['course_id']), 2)} h\n")
+            print(f"Śreni czas nauki / ects: {round(university.average_study_hours_in_course(course["course_id"]) / course["ects"], 2)} h / 1 ects\n")
+            print(f"Procent studentów którzy nie zdali: {round(university.percentage_of_people_who_failed(course['course_id']))}%\n")
+            # print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
+            print("----------------------------------------------------------------------------------\n")
 
 
     print("-- Analiza dla poszczególnych kierunków --\n")
@@ -452,11 +437,10 @@ def main():
         best_students_in_major = university.create_ranking(university.find_students_in_major(major))
         index = 1
         for student in best_students_in_major:
-            print(f"{index}. id: {student.id}, ocena: {student.calculate_average()}")
+            print(f"{index}. id: {student.id}, ocena: {round(student.calculate_average(), 2)}")
             index += 1
         print()
-        print("Średni czas nauki:")
-        print(f"{university.average_study_hours_in_major(major)} h\n")
-        print("średni wiek kierunku")
-        print(f"{round(university.average_age_in_major(major))}")
+        print(f"Średni czas nauki: {university.average_study_hours_in_major(major)} h\n")
+        print(f"Średni wiek: {round(university.average_age_in_major(major))}")
+        print("----------------------------------------------------------------------------------\n")
 main()
