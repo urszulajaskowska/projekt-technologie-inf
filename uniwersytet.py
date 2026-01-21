@@ -393,12 +393,10 @@ def main():
         student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"])
         university.add_student(student)
 
-
+    valid_course_id = [course["course_id"] for course in DATASET["courses"]]
     for student in university.students:
         for dataset_enrollment in DATASET["enrollments"]:
-            if dataset_enrollment["student_id"] == student.id:
-                enrollment = dataset_enrollment.copy()
-                del enrollment["student_id"]
+            if dataset_enrollment["student_id"] == student.id and dataset_enrollment["course_id"] in valid_course_id:
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
 
     university._remove_duplicates()
@@ -426,7 +424,7 @@ def main():
             print(f"Śreni czas nauki / ects: {round(university.average_study_hours_in_course(course["course_id"]) / course["ects"], 2)} h / 1 ects\n")
             print(f"Procent studentów którzy nie zdali: {round(university.percentage_of_people_who_failed(course['course_id']))}%\n")
             # print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
-            print("----------------------------------------------------------------------------------\n")
+            print("---------------------------------------------------------\n")
 
 
     print("-- Analiza dla poszczególnych kierunków --\n")
@@ -442,5 +440,5 @@ def main():
         print()
         print(f"Średni czas nauki: {university.average_study_hours_in_major(major)} h\n")
         print(f"Średni wiek: {round(university.average_age_in_major(major))}")
-        print("----------------------------------------------------------------------------------\n")
+        print("---------------------------------------------------------\n")
 main()
