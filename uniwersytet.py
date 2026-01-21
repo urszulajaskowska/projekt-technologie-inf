@@ -442,6 +442,7 @@ def main():
             print("Śreni czas nauki / ects:")
             print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
             print()
+        
 
     print("-- Analiza dla poszczególnych kierunków --\n")
     majors = {student["major"] for student in DATASET["students"] if student["major"] != None}
