@@ -427,14 +427,15 @@ def main():
     print("-- Analiza poszczególnych kursów --\n")
     for course in DATASET["courses"]:
         if course["ects"] > 0:
-            print(course["name"])
+            print(f"- {course["name"]} -\n")
+            print("Ranking studentów:")
             best_students_in_course = university.create_ranking(university.find_students_in_course(course["course_id"]))
             index = 1
             for student in best_students_in_course:
                 print(f"{index}. id: {student.id}, ocena: {student.calculate_average()}")
                 index += 1
             print()
-            print("Czas nauki / ects:")
+            print("Śreni czas nauki / ects:")
             print(f"{university.average_study_hours_in_course(course["course_id"]) / course["ects"]} h / 1 ects")
             print()
 
@@ -451,6 +452,5 @@ def main():
         print()
         print("Średni czas nauki:")
         print(f"{university.average_study_hours_in_major(major)} h\n")
-
 
 main()
