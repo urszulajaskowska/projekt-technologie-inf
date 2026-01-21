@@ -378,8 +378,13 @@ class University:
 
 def main():
     university = University()
-    
-        
+
+    courses_list = []
+    for course in DATASET["courses"]:
+        if course['ects'] != 0:
+            courses_list.append(course['course_id'])
+
+
 
     for dataset_student in DATASET["students"]:
         student = Student(dataset_student["student_id"], dataset_student["age"], dataset_student["major"])
@@ -388,7 +393,7 @@ def main():
 
     for student in university.students:
         for dataset_enrollment in DATASET["enrollments"]:
-            if dataset_enrollment["student_id"] == student.id:
+            if dataset_enrollment["student_id"] == student.id and dataset_enrollment["course_id"] in courses_list:
                 enrollment = dataset_enrollment.copy()
                 del enrollment["student_id"]
                 student.add_enrollment(dataset_enrollment["course_id"], dataset_enrollment["grade"], dataset_enrollment["study_hours"])
