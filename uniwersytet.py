@@ -408,9 +408,9 @@ def main():
     print("-- Analiza poszczególnych kursów --\n")
     for course in DATASET["courses"]:
         if course["ects"] > 0:
-            print(f"- {course["name"]} -\n")
+            print(f"- {course['name']} -\n")
             print("Ranking studentów:")
-            best_students_in_course = university.create_ranking(university.find_students_in_course(course["course_id"]))
+            best_students_in_course = university.create_ranking(university.find_students_in_course(course['course_id']))
             index = 1
             for student in best_students_in_course:
                 print(f"{index}. id: {student.id}, ocena: {round(student.calculate_average(), 2)}")
@@ -419,7 +419,7 @@ def main():
             print(f"Średnia ocen: {round(university.average_grade_for_course(course['course_id']), 2)}\n")
             print(f"Mediana ocen: {university.median_grade(course['course_id'])}\n")
             print(f"Średni czas nauki: {round(university.average_study_hours_in_course(course['course_id']), 2)} h\n")
-            print(f"Śreni czas nauki / ects: {round(university.average_study_hours_in_course(course["course_id"]) / course["ects"], 2)} h / 1 ects\n")
+            print(f"Śreni czas nauki / ects: {round(university.average_study_hours_in_course(course['course_id']) / course['ects'], 2)} h / 1 ects\n")
             print(f"Procent studentów którzy nie zdali: {round(university.percentage_of_people_who_failed(course['course_id']))}%\n")
             # print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
             print("---------------------------------------------------------\n")
