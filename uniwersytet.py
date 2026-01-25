@@ -353,7 +353,7 @@ class University:
 
         for student in self.students:
             for enrollment in student.enrollments:
-                if enrollment["course_id"] == course_id and enrollment["study_hours"] is not None:
+                if enrollment["course_id"] == course_id and enrollment["study_hours"] is not None and enrollment["grade"] is not None:
                     study_hours += enrollment["study_hours"]
         if len(self.find_students_in_course(course_id)) == 0:
             return None
@@ -433,7 +433,7 @@ def main():
         best_students_in_major = university.create_ranking(university.find_students_in_major(major))
         index = 1
         for student in best_students_in_major:
-            print(f"{index}. id: {student.id}, ocena: {round(student.calculate_average(), 2)}")
+            print(f"{index}. id: {student.id}, średnia ocen: {round(student.calculate_average(), 2)}")
             index += 1
         print()
         print(f"Średni czas nauki: {round(university.average_study_hours_in_major(major), 2)} h\n")
