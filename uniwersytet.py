@@ -251,7 +251,7 @@ class University:
         percent = counter / len(grades) * 100
         return percent
 
-    def median_grade(self, course_id: str) -> float | None:
+    def median_grade(self, course_id):
         grades = self._function_courses(course_id)
 
         if len(grades) == 0:
