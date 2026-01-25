@@ -259,23 +259,6 @@ class University:
         mediana = statistics.median(grades)
         return mediana
 
-
-    def effectivness_in_course(self,course_id):
-        students_learning_hours = 0
-        students_grades = []
-        for student in self.students:
-            for enrollment in student.enrollments:
-                if enrollment['course_id'] == course_id:
-                    if  enrollment['study_hours'] is not None and enrollment['grade'] is not None and enrollment['study_hours'] != 0:
-                        students_learning_hours += enrollment['study_hours']
-                        students_grades.append(enrollment['grade'])
-        if len(students_grades) == 0:
-            return None
-        if students_learning_hours == 0:
-            return None
-        students_average_grades = sum(students_grades)/len(students_grades)
-        return students_average_grades/students_learning_hours
-
     def find_students_in_course(self, course_id):
         students_in_course = []
 
@@ -427,7 +410,7 @@ def main():
             print(f"Średni czas nauki: {round(university.average_study_hours_in_course(course['course_id']), 2)} h\n")
             print(f"Śreni czas nauki / ects: {round(university.average_study_hours_in_course(course['course_id']) / course['ects'], 2)} h / 1 ects\n")
             print(f"Procent studentów którzy nie zdali: {round(university.percentage_of_people_who_failed(course['course_id']))}%\n")
-            # print(f"Wskaźnik efektywności dla kursu {course['name']} wynosi {university.effectivness_in_course(course['course_id'])}")
+            print(f"Wskaźnik efektywności dla kursu: {round(university.average_grade_for_course(course['course_id'])/university.average_study_hours_in_course(course['course_id']), 5)} (średnia ocen / średni czas nauki)")
             print("---------------------------------------------------------\n")
 
 
