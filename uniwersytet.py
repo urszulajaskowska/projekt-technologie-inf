@@ -355,8 +355,10 @@ class University:
             for enrollment in student.enrollments:
                 if enrollment["course_id"] == course_id and enrollment["study_hours"] is not None and enrollment["grade"] is not None:
                     study_hours += enrollment["study_hours"]
+
         if len(self.find_students_in_course(course_id)) == 0:
             return None
+
         return study_hours / len(self.find_students_in_course(course_id))
 
     def average_study_hours_in_major(self, major):
@@ -364,8 +366,11 @@ class University:
 
         for student in self.students:
             for enrollment in student.enrollments:
-                if student.major == major and enrollment["study_hours"] is not None:
+                if student.major == major and enrollment["study_hours"] is not None and enrollment["grade"] is not None:
                     study_hours += enrollment["study_hours"]
+
+        if len(self.find_students_in_major(major)) == 0:
+            return None
 
         return study_hours / len(self.find_students_in_major(major))
 
@@ -404,6 +409,7 @@ def main():
     for best_student in best_students:
         print(f"id: {best_student.id}, śrenia ocen: {best_student.calculate_average()}")
     print()
+    print("---------------------------------------------------------\n")
 
     print("-- Analiza poszczególnych kursów --\n")
     for course in DATASET["courses"]:
